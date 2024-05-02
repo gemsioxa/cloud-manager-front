@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useScript from '../../hooks/useScript';
+import './style.css';
 
 export default function YandexAuth() {
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
     useEffect(() => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const promise = useScript('https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js');
@@ -42,6 +45,7 @@ export default function YandexAuth() {
                     link.href = `cloud-manager://access_token=${JSON.stringify(data.access_token)}`;
                     document.body.appendChild(link);
                     link.click();
+                    setIsAuthenticated(true);
                 }
             })
             // tslint:disable-next-line: no-shadowed-variable
@@ -52,7 +56,16 @@ export default function YandexAuth() {
 
     
     return (
-        <div>YandexAuth
+        <div className={'yandex'}>
+            <div className={'yandex__name'}>Добавить аккаунт</div>
+            <div className={'yandex__description'}>
+                Авторизуйтесь с помощью YandexID, чтобы добавить аккаунт в приложение Cloud Manager
+            </div>
+            {isAuthenticated && (
+                <div className={'yandex__authenticated'}>
+                    Успешно. Теперь можете закрыть эту страницу...
+                </div>
+            )}
             <div id="auth-container"></div>
         </div>
     )
