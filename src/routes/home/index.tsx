@@ -23,7 +23,7 @@ export default function Home() {
           Email: gemsioxabusiness@gmail.com
         </div>
         <div>
-          Cloud Manager Inc.
+          {/* Cloud Manager Inc. */}
         </div>
       </footer>
     </div>
